@@ -12,9 +12,9 @@ Source2:	%{name}.pc.in
 # backport fix to FTBFS in nodejs-0.10.3
 # https://github.com/joyent/node/issues/5213
 Patch0001:	0001-unix-include-uv.h-in-src-version.c.patch
-BuildRequires:	gyp
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
+BuildRequires:	python-gyp
 # Bundling exception request:
 # https://fedorahosted.org/fpc/ticket/231
 Provides:	bundled(libev) = 4.04
