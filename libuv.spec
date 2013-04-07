@@ -13,6 +13,8 @@ Source2:	%{name}.pc.in
 # https://github.com/joyent/node/issues/5213
 Patch0001:	0001-unix-include-uv.h-in-src-version.c.patch
 BuildRequires:	gyp
+BuildRequires:	libstdc++-devel
+BuildRequires:	pkgconfig
 # Bundling exception request:
 # https://fedorahosted.org/fpc/ticket/231
 Provides:	bundled(libev) = 4.04
