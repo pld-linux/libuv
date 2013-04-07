@@ -1,0 +1,42 @@
+From fb660262d4f8b6d0f300a3923063ec5a718411ad Mon Sep 17 00:00:00 2001
+From: Ben Noordhuis <info@bnoordhuis.nl>
+Date: Thu, 4 Apr 2013 03:02:06 +0200
+Subject: [PATCH] unix: include uv.h in src/version.c
+
+Include uv.h so the compiler sees the right visibility attribute for
+uv_version() and uv_version_string().
+
+GYP builds compile with -fvisibility=hidden. Before this commit, the
+symbols were not visible in libuv.so.
+
+Fixes joyent/node#5213.
+(cherry picked from commit f1215b791811e5c860152ecde038f35537dab57f)
+---
+ src/version.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/version.c b/src/version.c
+index 0ee0753..7326180 100644
+--- a/src/version.c
++++ b/src/version.c
+@@ -19,6 +19,7 @@
+  * IN THE SOFTWARE.
+  */
+ 
++#include "uv.h"
+ 
+  /*
+  * Versions with an even minor version (e.g. 0.6.1 or 1.0.4) are API and ABI
+@@ -26,6 +27,9 @@
+  * releases.
+  */
+ 
++#undef UV_VERSION_MAJOR   /* TODO(bnoordhuis) Remove in v0.11. */
++#undef UV_VERSION_MINOR   /* TODO(bnoordhuis) Remove in v0.11. */
++
+ #define UV_VERSION_MAJOR 0
+ #define UV_VERSION_MINOR 10
+ #define UV_VERSION_PATCH 3
+-- 
+1.8.1.4
+
