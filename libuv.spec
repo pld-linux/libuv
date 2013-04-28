@@ -1,23 +1,22 @@
-%define git_snapshot 5462dab
+#
+# Conditional build:
+%bcond_with	tests		# build with tests (require network access)
+
+# git log -1 --pretty=format:%h v0.10.5
+%define git_snapshot 6595a77
 Summary:	Platform layer for node.js
 Name:		libuv
-Version:	0.10.3
+Version:	0.10.5
 Release:	1
 License:	MIT
 Group:		Development/Tools
 URL:		http://nodejs.org/
 Source0:	http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
-# Source0-md5:	fb20265511ebb7f0785f83c60a650324
+# Source0-md5:	169e4d299e791b733892bc1c04b2b6b9
 Source2:	%{name}.pc.in
-# backport fix to FTBFS in nodejs-0.10.3
-# https://github.com/joyent/node/issues/5213
-Patch0001:	0001-unix-include-uv.h-in-src-version.c.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-gyp
-# Bundling exception request:
-# https://fedorahosted.org/fpc/ticket/231
-Provides:	bundled(libev) = 4.04
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # we only need major.minor in the SONAME in the stable (even numbered) series
@@ -39,7 +38,6 @@ Development libraries for libuv
 
 %prep
 %setup -q -n %{name}-v%{version}
-%patch0001 -p1
 
 %build
 CC="%{__cc}" \
@@ -63,9 +61,8 @@ sed -i -e "s/libuv.so/libuv.so.%{sover}/g" out/{libuv,run-benchmarks,run-tests}.
 	LDFLAGS.host="%{rpmldflags}"
 
 %if %{with tests}
-# Tests are currently disabled because some require network access
-#./run-tests
-#./run-benchmarks
+./run-tests
+./run-benchmarks
 %endif
 
 %install
