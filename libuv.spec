@@ -2,13 +2,12 @@
 # Conditional build:
 %bcond_with	tests		# build with tests (require network access)
 
-# git log -1 --pretty=format:%h v0.10.13
-%define git_snapshot 381312e
 Summary:	Platform layer for node.js
 Name:		libuv
 Version:	0.10.13
 Release:	1
-License:	MIT
+# the licensing breakdown is described in detail in the LICENSE file
+License:	MIT and BSD and ISC
 Group:		Development/Tools
 URL:		http://nodejs.org/
 Source0:	http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
@@ -34,7 +33,7 @@ Group:		Development/Tools
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Development libraries for libuv
+Development libraries for libuv.
 
 %prep
 %setup -q -n %{name}-v%{version}
@@ -48,9 +47,6 @@ CXXFLAGS="%{rpmcxxflags} %{rpmcppflags}" \
 ./gyp_uv \
 	-Dcomponent=shared_library \
 	-Dlibrary=shared_library
-
-# Modify the build so it produces a versioned shared library
-sed -i -e "s/libuv.so/libuv.so.%{sover}/g" out/{libuv,run-benchmarks,run-tests}.target.mk
 
 %{__make} V=1 -C out \
 	CC="%{__cc}" \
@@ -69,7 +65,7 @@ sed -i -e "s/libuv.so/libuv.so.%{sover}/g" out/{libuv,run-benchmarks,run-tests}.
 rm -rf $RPM_BUILD_ROOT
 # Copy the shared lib into the libdir
 install -d $RPM_BUILD_ROOT%{_libdir}
-cp -p out/Release/obj.target/libuv.so.%{sover} $RPM_BUILD_ROOT%{_libdir}/libuv.so.%{version}
+cp -p out/Release/obj.target/libuv.so $RPM_BUILD_ROOT%{_libdir}/libuv.so.%{version}
 lib=$(basename $RPM_BUILD_ROOT%{_libdir}/libuv.so.*.*.*)
 ln -s $lib $RPM_BUILD_ROOT%{_libdir}/libuv.so.%{sover}
 ln -s $lib $RPM_BUILD_ROOT%{_libdir}/libuv.so
@@ -90,7 +86,7 @@ sed -e "s#@prefix@#%{_prefix}#g" \
     -e "s#@exec_prefix@#%{_exec_prefix}#g" \
     -e "s#@libdir@#%{_libdir}#g" \
     -e "s#@includedir@#%{_includedir}#g" \
-    -e "s#@version@#%{version}.git%{git_snapshot}#g" \
+    -e "s#@version@#%{version}#g" \
     %{SOURCE2} > $RPM_BUILD_ROOT%{_pkgconfigdir}/libuv.pc
 
 %clean
@@ -107,7 +103,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc README.md AUTHORS LICENSE
 %{_libdir}/libuv.so
 %{_pkgconfigdir}/libuv.pc
 %{_includedir}/uv.h
