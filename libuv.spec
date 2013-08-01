@@ -2,17 +2,17 @@
 # Conditional build:
 %bcond_with	tests		# build with tests (require network access)
 
-# git log -1 --pretty=format:%h v0.10.5
-%define git_snapshot 6595a77
+# git log -1 --pretty=format:%h v0.10.13
+%define git_snapshot 381312e
 Summary:	Platform layer for node.js
 Name:		libuv
-Version:	0.10.5
+Version:	0.10.13
 Release:	1
 License:	MIT
 Group:		Development/Tools
 URL:		http://nodejs.org/
 Source0:	http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
-# Source0-md5:	169e4d299e791b733892bc1c04b2b6b9
+# Source0-md5:	45ff7b043bd0139fc3fd289991411dc5
 Source2:	%{name}.pc.in
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
@@ -20,7 +20,7 @@ BuildRequires:	python-gyp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # we only need major.minor in the SONAME in the stable (even numbered) series
-# this should be changed to %%{version} in unstable (odd numbered) releases
+# this should be changed to %{version} in unstable (odd numbered) releases
 %define		sover	0.10
 
 %description
