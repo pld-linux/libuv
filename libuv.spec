@@ -4,15 +4,15 @@
 
 Summary:	Platform layer for node.js
 Name:		libuv
-Version:	0.10.18
+Version:	0.10.25
 Release:	1
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Development/Tools
-URL:		http://nodejs.org/
 Source0:	http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
-# Source0-md5:	1f93b79fc811d7ed58187670110841de
+# Source0-md5:	329a61fa3c30acf46efef1a9221b2054
 Source2:	%{name}.pc.in
+URL:		http://nodejs.org/
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-gyp
@@ -44,7 +44,7 @@ CXX="%{__cxx}" \
 LDFLAGS="%{rpmldflags}" \
 CFLAGS="%{rpmcflags} %{rpmcppflags}" \
 CXXFLAGS="%{rpmcxxflags} %{rpmcppflags}" \
-./gyp_uv \
+./gyp_uv.py \
 	-Dcomponent=shared_library \
 	-Dlibrary=shared_library
 
