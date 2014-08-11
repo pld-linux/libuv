@@ -4,13 +4,13 @@
 
 Summary:	Platform layer for node.js
 Name:		libuv
-Version:	0.10.25
+Version:	0.10.28
 Release:	1
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Development/Tools
 Source0:	http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
-# Source0-md5:	329a61fa3c30acf46efef1a9221b2054
+# Source0-md5:	1a3e1a44e76df606f2b802ac81481949
 Source2:	%{name}.pc.in
 URL:		http://nodejs.org/
 BuildRequires:	libstdc++-devel
