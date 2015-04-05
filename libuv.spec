@@ -7,7 +7,7 @@ Name:		libuv
 # Version 0.10.x (Stable)
 # Version 0.11.x (Unstable)
 Version:	0.10.29
-Release:	1
+Release:	2
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Development/Tools
