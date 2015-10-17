@@ -4,25 +4,19 @@
 
 Summary:	Platform layer for node.js
 Name:		libuv
-# Version 0.10.x (Stable)
-# Version 0.11.x (Unstable)
-Version:	0.10.36
+Version:	1.0.2
 Release:	1
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Development/Tools
 Source0:	http://dist.libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
-# Source0-md5:	8eb77b4fee4f311c114a9fee06f5a2ab
-Source2:	%{name}.pc.in
-URL:		http://nodejs.org/
+# Source0-md5:	3507961d2f06f1e35906a83ffe7f9f4c
+URL:		http://libuv.org/
+BuildRequires:	automake >= 1:1.12
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-gyp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# we only need major.minor in the SONAME in the stable (even numbered) series
-# this should be changed to %{version} in unstable (odd numbered) releases
-%define		sover	0.10
 
 %description
 libuv is a new platform layer for Node. Its purpose is to abstract
@@ -40,23 +34,18 @@ Development libraries for libuv.
 %prep
 %setup -q -n %{name}-v%{version}
 
-%build
-CC="%{__cc}" \
-CXX="%{__cxx}" \
-LDFLAGS="%{rpmldflags}" \
-CFLAGS="%{rpmcflags} %{rpmcppflags}" \
-CXXFLAGS="%{rpmcxxflags} %{rpmcppflags}" \
-./gyp_uv.py \
-	-Dcomponent=shared_library \
-	-Dlibrary=shared_library
+# serial-tests is available in v1.12 and newer.
+echo "m4_define([UV_EXTRA_AUTOMAKE_FLAGS], [serial-tests])" > m4/libuv-extra-automake-flags.m4
 
-%{__make} V=1 -C out \
-	CC="%{__cc}" \
-	CXX="%{__cxx}" \
-	BUILDTYPE=Release \
-	CC.host="%{__cc}" \
-	CXX.host="%{__cxx}" \
-	LDFLAGS.host="%{rpmldflags}"
+%build
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__automake}
+%configure \
+	--disable-silent-rules \
+	--disable-static
+%{__make}
 
 %if %{with tests}
 ./run-tests
@@ -65,31 +54,11 @@ CXXFLAGS="%{rpmcxxflags} %{rpmcppflags}" \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-# Copy the shared lib into the libdir
-install -d $RPM_BUILD_ROOT%{_libdir}
-cp -p out/Release/obj.target/libuv.so $RPM_BUILD_ROOT%{_libdir}/libuv.so.%{version}
-lib=$(basename $RPM_BUILD_ROOT%{_libdir}/libuv.so.*.*.*)
-ln -s $lib $RPM_BUILD_ROOT%{_libdir}/libuv.so.%{sover}
-ln -s $lib $RPM_BUILD_ROOT%{_libdir}/libuv.so
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
-# Copy the headers into the include path
-install -d $RPM_BUILD_ROOT/%{_includedir}/uv-private
-cp -p include/uv.h $RPM_BUILD_ROOT/%{_includedir}
-cp -p \
-   include/uv-private/ngx-queue.h \
-   include/uv-private/tree.h \
-   include/uv-private/uv-linux.h \
-   include/uv-private/uv-unix.h \
-   $RPM_BUILD_ROOT/%{_includedir}/uv-private
-
-# Create the pkgconfig file
-install -d $RPM_BUILD_ROOT/%{_pkgconfigdir}
-sed -e "s#@prefix@#%{_prefix}#g" \
-    -e "s#@exec_prefix@#%{_exec_prefix}#g" \
-    -e "s#@libdir@#%{_libdir}#g" \
-    -e "s#@includedir@#%{_includedir}#g" \
-    -e "s#@version@#%{version}#g" \
-    %{SOURCE2} > $RPM_BUILD_ROOT%{_pkgconfigdir}/libuv.pc
+# obsoleted by .pc file
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libuv.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -101,11 +70,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md AUTHORS LICENSE
 %attr(755,root,root) %{_libdir}/libuv.so.*.*.*
-%ghost %{_libdir}/libuv.so.%{sover}
+%ghost %{_libdir}/libuv.so.1
 
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/libuv.so
 %{_pkgconfigdir}/libuv.pc
 %{_includedir}/uv.h
-%{_includedir}/uv-private
+%{_includedir}/uv-errno.h
+%{_includedir}/uv-linux.h
+%{_includedir}/uv-threadpool.h
+%{_includedir}/uv-unix.h
+%{_includedir}/uv-version.h
