@@ -12,10 +12,10 @@ Group:		Development/Tools
 Source0:	http://dist.libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 # Source0-md5:	51cfa3d8adc05852982e3c742ec3c039
 URL:		http://libuv.org/
+BuildRequires:	autoconf
 BuildRequires:	automake >= 1:1.12
-BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	python-gyp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
