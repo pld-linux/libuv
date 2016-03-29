@@ -6,13 +6,13 @@
 Summary:	Platform layer for node.js
 Summary(pl.UTF-8):	Zależna od platformy warstwa node.js
 Name:		libuv
-Version:	1.6.1
-Release:	2
+Version:	1.8.0
+Release:	1
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Libraries
 Source0:	http://dist.libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
-# Source0-md5:	51cfa3d8adc05852982e3c742ec3c039
+# Source0-md5:	f4229c4360625e973ae933cb92e1faf7
 URL:		http://libuv.org/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1:1.12
