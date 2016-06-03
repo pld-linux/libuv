@@ -3,33 +3,33 @@
 %bcond_without	static_libs	# static library
 %bcond_with	tests		# build with tests (require network access)
 
-Summary:	Platform layer for node.js
-Summary(pl.UTF-8):	Zależna od platformy warstwa node.js
+Summary:	Multi-platform support library with a focus on asynchronous I/O
+Summary(pl.UTF-8):	Wieloplatformowa biblioteka wspierająca skupiająca się na asynchronicznym we/wy
 Name:		libuv
-Version:	1.8.0
+Version:	1.9.1
 Release:	1
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Libraries
 Source0:	http://dist.libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
-# Source0-md5:	f4229c4360625e973ae933cb92e1faf7
+# Source0-md5:	654bf6783ac7fc10435c84ec86720a6e
 URL:		http://libuv.org/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1:1.12
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:2
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-libuv is a new platform layer for Node. Its purpose is to abstract
-IOCP on Windows and libev on Unix systems. We intend to eventually
-contain all platform differences in this library.
+libuv is a multi-platform support library with a focus on asynchronous
+I/O. It was primarily developed for use by Node.js, but it's also used
+by Luvit, Julia, pyuv and others.
 
 %description -l pl.UTF-8
-libuv to nowa, zależna od platformy warstwa Node. Celem jest
-abstrakcja dla IOCP na Windows i libev na systemach uniksowych. W
-przyszłości ta biblioteka może zawierać wszystkie różnice
-międzyplatformowe.
+libuv to wieloplatformowa biblioteka wspierająca, skupiająca się na
+asynchronicznych operacjach wejścia-wyjścia. Była rozwijana głównie z
+myślą o wykorzystaniu w Node.js, ale obecnie jest używana także przez
+projekty takie jak Luvit, Julia, pyuv i inne.
 
 %package devel
 Summary:	Header files for libuv library
