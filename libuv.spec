@@ -11,7 +11,7 @@ Release:	1
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Libraries
-Source0:	http://dist.libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
+Source0:	https://dist.libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 # Source0-md5:	dc51c45ac5baab37e1abc87906ac7af1
 URL:		http://libuv.org/
 BuildRequires:	autoconf >= 2.57
