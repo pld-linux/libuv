@@ -6,13 +6,13 @@
 Summary:	Multi-platform support library with a focus on asynchronous I/O
 Summary(pl.UTF-8):	Wieloplatformowa biblioteka wspierająca skupiająca się na asynchronicznym we/wy
 Name:		libuv
-Version:	1.29.1
-Release:	2
+Version:	1.34.0
+Release:	1
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Libraries
 Source0:	https://dist.libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
-# Source0-md5:	e3202bd420e0740d6809df042cccd9f9
+# Source0-md5:	811ebe06c326e788ac7adf062328f3f1
 URL:		http://libuv.org/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1:1.12
@@ -100,9 +100,9 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libuv.so
-%{_pkgconfigdir}/libuv.pc
 %{_includedir}/uv.h
 %{_includedir}/uv
+%{_pkgconfigdir}/libuv.pc
 
 %if %{with static_libs}
 %files static
