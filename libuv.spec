@@ -7,12 +7,13 @@ Summary:	Multi-platform support library with a focus on asynchronous I/O
 Summary(pl.UTF-8):	Wieloplatformowa biblioteka wspierająca skupiająca się na asynchronicznym we/wy
 Name:		libuv
 Version:	1.41.0
-Release:	1
+Release:	2
 # the licensing breakdown is described in detail in the LICENSE file
 License:	MIT and BSD and ISC
 Group:		Libraries
 Source0:	https://dist.libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 # Source0-md5:	d990b0770dd2b15f7a8399580d55d32c
+Patch0:		CVE-2021-22918.patch
 URL:		http://libuv.org/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1:1.12
@@ -57,6 +58,7 @@ Statyczna biblioteka libuv.
 
 %prep
 %setup -q -n %{name}-v%{version}
+%patch0 -p1
 
 # serial-tests is available in v1.12 and newer.
 echo "m4_define([UV_EXTRA_AUTOMAKE_FLAGS], [serial-tests])" > m4/libuv-extra-automake-flags.m4
